@@ -1,0 +1,13 @@
+{% extends 'indexlogin.html' %}
+
+{% load static %}
+
+{% block login %}
+<form action="" method="post"> {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type="submit">Registro</button>
+
+</form>
+{% endblock login %}
