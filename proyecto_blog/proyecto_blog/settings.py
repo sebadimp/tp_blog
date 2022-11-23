@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'AppLogin',
     'AppMensajes',
     'AppPerfiles',
-    'AppRegistros'
+    'AppRegistros',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block PostList %}
+
+{% for post in object_list  %}
+
+<div class="card mb-4">
+    <div class="card-header">Titulo: <b>{{post.titulo}}</b> - Categoria: <i>{{post.categoria}}</i></div>
+    <div class="card-body"> 
+        Fecha: {{post.fecha}}   -
+        Autor: {{post.autor}}
+        <button>
+            <a href={% url 'post detail' post.id %}>Ver posteo</a>
+        </button>
+        <button>
+            <a href={% url 'post delete' post.id %}>Eliminar</a>
+        </button>
+        <button>
+            <a href={% url 'post update' post.id %}>Editar</a>
+        </button>       
+    </div>
+</div>
+
+
+{% endfor %}
+
+{% endblock PostList %}

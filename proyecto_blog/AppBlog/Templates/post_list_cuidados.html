@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block Posteos %}
+{% for post in posteos %}
+
+<div class="card mb-4">
+
+    <div class="card-header">Titulo: <b>{{post.titulo}}</b> - Categoria: <i>{{post.categoria}}</i></div>
+    <div class="card-body">        
+
+    </div>
+    
+
+</div>
+
+{% endfor %}
+
+{% endblock Posteos %}
+

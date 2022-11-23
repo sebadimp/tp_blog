@@ -1,0 +1,17 @@
+{% extends 'indexdetail.html' %}
+
+{% load static %}
+
+{% block creacion %}
+
+<form action="" method="post"> {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+
+    <input type="submit" value="Enviar">
+</form>
+
+{% endblock  %}
+
+
+
