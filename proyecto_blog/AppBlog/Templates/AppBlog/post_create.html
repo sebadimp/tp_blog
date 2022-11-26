@@ -2,13 +2,15 @@
 
 {% load static %}
 
-{% block creacion %}
+{% block create %}
 
 <form action="" method="post"> {% csrf_token %}
     {{form.media}}
     {{form.as_p}}
 
+
     <input type="submit" value="Enviar">
+
 </form>
 
 {% endblock  %}

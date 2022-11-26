@@ -4,8 +4,15 @@
 
 {% block login%}
 <ul>
+    <form action="" method="post"> {% csrf_token %}
 
-<p> Usuario nuevo? <a href={% url 'registro' %}>Registrarse</a> </p>
+        {{form.as_p}}
+    
+        <button class="btn btn-outline-dark" type="submit">Iniciar Sesión</button>
+    
+    </form>
+<p></p>  
+<p> Usuario nuevo? <a  href={% url 'registro' %}>Registrarse</a> </p>
 
 </ul>
 {% endblock %}

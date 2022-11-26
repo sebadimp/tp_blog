@@ -1,7 +1,20 @@
+{% extends 'indexdetail.html' %}
+
+{% load static %}
+
+{% block delete %}
+
+
 <form action="" method="post"> {% csrf_token %}
+<ul>
 
-    ¿ Esta seguro de eliminar el post {{post.titulo}} ?
 
+    ¿ Esta seguro de eliminar el post <b>{{post.titulo}}</b>?
+    <p><p>
     <input type="submit" value="Eliminar">
+    </p></p>
+</ul>
 
 </form>
+
+{% endblock delete %}

@@ -1,0 +1,37 @@
+{% extends 'indexusuarios.html' %}
+
+{% load static %}
+
+{% block ListaUsuarios %}
+
+
+
+<div>
+            <table class="table table-striped" align="center" border="3" cellpadding="5" cellspacing="0" style="width:75%">
+                
+                <tr>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Detalles</th>
+                </tr>
+                {% for usuarios in object_list  %}
+                <tr>
+                    <td>{{usuarios.username}}</td>
+                    <td>{{usuarios.email}}</td>
+                    <td>
+                        <a class="btn btn-outline-dark" href="">Ver</a>
+                        <a class="btn btn-outline-dark" href="">Editar</a>
+                        <a class="btn btn-outline-dark" href="">Eliminar</a>
+                    </td>         
+                </tr>
+                {% endfor %}
+              </table>
+</div>
+
+
+
+
+
+
+
+{% endblock ListaUsuarios %}

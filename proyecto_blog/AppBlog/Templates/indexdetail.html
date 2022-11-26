@@ -22,8 +22,8 @@
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link" href={% url 'post create' %}>Postear</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Acerca de mi</a></li>
-                        <li class="nav-item"><a class="nav-link" href={% url 'login' %}>Iniciar Sesión</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href={% url 'principal' %}>Blog</a></li>
+                        <li class="nav-item"><a class="nav-link" href={% url 'logout' %}>Cerrar Sesión</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href={% url 'post list' %}>Blog</a></li>
                     </ul>
                 </div>
             </div>
@@ -32,8 +32,8 @@
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
                 <div class="text-center my-5">
-                    <h1 class="fw-bolder">Bienvenidos al Blog de Frenchies!</h1>
-                    <p class="lead mb-0">Un lugar donde encontraras todo tipo de informacion para tu peludito de 4 patas</p>
+                    <h1 class="fw-bolder">Bienvenidos al Blog de Mascotas!</h1>
+                    <p class="lead mb-0">Un lugar donde encontraras todo tipo de informacion para tus amiguitos de 4 patas</p>
                 </div>
             </div>
         </header>
@@ -48,13 +48,17 @@
                     <div class="row">
                         <div class="col-lg-16">                            
 
-                            {% block detalle  %}
+                            {% block detail  %}
 
-                            {% endblock detalle  %}
+                            {% endblock detail  %}
 
-                            {% block creacion %}
+                            {% block create %}
 
-                            {% endblock creacion %}
+                            {% endblock create %}
+
+                            {% block delete %}
+
+                            {% endblock delete %}
 
                         </div>
                     </div>
@@ -102,6 +106,7 @@
             </div>
         </div>
         <!-- Footer-->
+        <p></p>
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
         </footer>

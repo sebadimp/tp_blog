@@ -16,32 +16,46 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Bienvenidos</a>
+                <a class="navbar-brand" href={% url 'post list' %}>Blog</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                       
+                        <li class="nav-item"><a class="nav-link" href={% url 'post create' %}>Postear</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Acerca de mi</a></li>
+                        <li class="nav-item"><div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                              Hola, {{user}} !
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="#">Perfil</a></li>
+                              <li><a class="dropdown-item" href="#">Mensajes</a></li>
+                              {%if request.user.is_superuser%}
+                              <li><a class="dropdown-item" href={% url 'lista usuarios' %}>Administrar Blog</a></li>
+                              {% endif %}
+                              <li><a class="dropdown-item" href={% url 'logout' %}>Cerrar Sesion</a></li>
+                            </ul>
+                          </div></li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <!-- Page header with logo and tagline-->
         <header class="py-5 bg-light border-bottom mb-4">
             <div class="container">
-                <div>
-                    {% block login%}
-        
-                    {% endblock %}
-                    {% block logout %}
-
-                    {% endblock logout %}
+                <div class="text-center my-5">
+                    <h1 class="fw-bolder">Perfil Admin</h1>
+                    <p class="lead mb-0">Alta, Edición y Eliminación de Usuarios</p>
                 </div>
             </div>
         </header>
-
-
-
-
+        <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                {% block ListaUsuarios %}{% endblock ListaUsuarios %}
+            </div>
+        </div>
         <!-- Footer-->
+        <p></p>
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
         </footer>
