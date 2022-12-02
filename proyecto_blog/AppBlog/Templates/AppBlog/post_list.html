@@ -8,24 +8,24 @@
 {% for post in object_list  %}
 <div class="col-sm-6">
     
-    <div class="card-header"><b>{{post.titulo}}</b> </div> 
-        <div class="card-body">
-
+    <div class="card border-dark mb-3">
+        <div class="card-header"><b>{{post.titulo}}</b></div> 
+        <div class="card-body text-dark">
             
-            {{post.subtitulo|safe}}
+            {{post.descripcion|safe}}
             <p><p>
-                <a class="btn btn-outline-dark" href={% url 'post detail' post.id %}>Ver</a>
+                <a class="btn btn-outline-dark " href={% url 'post detail' post.id %}>Ver</a>
             {% if request.user.is_superuser %}
                 <a class="btn btn-outline-dark" href={% url 'post delete' post.id %}>Eliminar</a>
             {% endif %}
-            {% if request.user.username == post.autor or request.user.is_superuser %}
+            {% if request.user.id == post.idautor_id or request.user.is_superuser %}
                 <a class="btn btn-outline-dark" href={% url 'post update' post.id %}>Editar</a>
             {% endif %}
             </p></p>
-            <b>{{post.fecha}} | </b><i><a href={% url 'filtro ' post.categoria %}>{{post.categoria}}</a></i><b> | {{post.autor}} </b>
+            <b>{{post.fecha_creacion}} | </b><i><a href={% url 'filtro ' post.categoria %}>{{post.categoria}}</a></i><b> | {{post.autor}} </b>
         </div>
        
-    
+    </div>
 </div>
 {% endfor %}
 </div>

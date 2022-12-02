@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from AppBlog import views
-from django.contrib.auth.decorators import login_required
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('', views.mostrar_indexprincipal,name='principal'),
+    path('sobremi/',views.sobremi,name='sobremi'),
     path('post_list/',views.PostList.as_view(),name='post list'),
     path('post_create/',views.PostCreate.as_view(),name='post create'),
     path('post_filtro/cuidados',views.PostListCuidados.as_view(),name='filtro cuidados'),
@@ -29,5 +32,8 @@ urlpatterns = [
     path('post_detail/<pk>',views.PostDetail.as_view(),name='post detail'),
     path('post_delete/<pk>',views.PostDelete.as_view(),name='post delete'),
     path('post_update/<pk>',views.PostUpdate.as_view(),name='post update'),
-    path('lista_usuarios/',views.ControlUsuarios.as_view(),name='lista usuarios'),  
+    path('lista_usuarios/',views.ControlUsuarios.as_view(),name='lista usuarios'),
+    #path('user_update/',views.UserUpdate,name='user update'),  
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

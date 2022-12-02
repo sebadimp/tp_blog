@@ -16,37 +16,51 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="#!">Bienvenidos</a>
+                <a class="navbar-brand" href={% url 'post list' %}>Blog</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {%if not request.user.is_superuser%}
                         <li class="nav-item"><a class="nav-link" href={% url 'post create' %}>Postear</a></li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link" href="#!">Acerca de mi</a></li>
-                        <li class="nav-item"><a class="nav-link" href={% url 'logout' %}>Cerrar Sesión</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href={% url 'post list' %}>Blog</a></li>
+                        <li class="nav-item"><div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                              Hola, {{user}} !
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="#">Perfil</a></li>
+                              <li><a class="dropdown-item" href="#">Mensajes</a></li>
+                              {%if request.user.is_superuser%}
+                              <li><a class="dropdown-item" href={% url 'lista usuarios' %}>Administrar Blog</a></li>
+                              {% endif %}
+                              <li><a class="dropdown-item" href={% url 'logout' %}>Cerrar Sesion</a></li>
+                            </ul>
+                          </div></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
-        <header class="py-5 bg-light border-bottom mb-4">
+        <header class="py-2 bg-light border-bottom mb-4">
             <div class="container">
-                <div class="text-center my-5">
-                    <h1 class="fw-bolder">Bienvenidos al Blog de Mascotas!</h1>
-                    <p class="lead mb-0">Un lugar donde encontraras todo tipo de informacion para tus amiguitos de 4 patas</p>
-                </div>
+
+                    {% block imagen %}
+                    
+                    {% endblock imagen %}
+
             </div>
         </header>
         <!-- Page content-->
         <div class="container">
             <div class="row">
                 <!-- Blog entries-->
-                <div class="col-lg-8">
+                <div class="col-lg-32">
                     <!-- Featured blog post-->
 
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
-                        <div class="col-lg-16">                            
+                        <div class="col-xxl-64">                            
 
                             {% block detail  %}
 
@@ -61,46 +75,6 @@
                             {% endblock delete %}
 
                         </div>
-                    </div>
-                </div>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Search widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Search</div>
-                        <div class="card-body">
-                            <div class="input-group">
-                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Categories</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href={% url 'filtro cuidados' %}>Cuidados</a></li>
-                                        <li><a href={% url 'filtro alimentacion' %}>Alimentación</a></li>
-                                        <li><a href={% url 'filtro entretenimiento' %}>Entretenimiento</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="#!">JavaScript</a></li>
-                                        <li><a href="#!">CSS</a></li>
-                                        <li><a href="#!">Tutorials</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Side Widget</div>
-                        <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
                     </div>
                 </div>
             </div>

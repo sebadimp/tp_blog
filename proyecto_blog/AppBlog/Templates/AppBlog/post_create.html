@@ -1,13 +1,12 @@
-{% extends 'indexdetail.html' %}
+{% extends 'indexupdate.html' %}
 
 {% load static %}
 
 {% block create %}
 
-<form action="" method="post"> {% csrf_token %}
+<form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
     {{form.media}}
     {{form.as_p}}
-
 
     <input type="submit" value="Enviar">
 

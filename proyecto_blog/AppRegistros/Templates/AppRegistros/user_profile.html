@@ -1,0 +1,27 @@
+{% extends 'indexuser.html' %}
+
+{% load static %}
+
+{% block perfil %}
+
+<h1 style="color: white;"><i>Datos del Usuario</i></h1>
+<div class="card" style="width: 18rem;">
+    {% if avatar.imagen %}
+    <img src={{avatar.imagen.url}} class="card-img-top" alt="...">
+    <a class="btn btn-outline-dark" href={% url 'update avatar' user.id  %}>Actualizar Avatar</a>
+    {% else %}
+    <img src="" class="card-img-top" alt="...">   
+    <a class="btn btn-outline-dark" href={% url 'update avatar' user.id  %}>Agregar Avatar</a>
+    {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{user.username}}</h5>
+      <p>{{user.first_name}}, {{user.last_name}}</p>
+      <p>{{user.email}}</p>
+    </div>
+      <a class="btn btn-outline-dark" href={% url 'user update'  %}>Actualizar Datos</a>
+      </div>
+
+{% endblock perfil %}
+
+
+

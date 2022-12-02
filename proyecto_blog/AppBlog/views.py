@@ -1,17 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.models import User
+from AppBlog.forms import *
 from .models import Post
 
 
 def mostrar_indexprincipal(request):
     return render(request,'indexprincipal.html')
 
+def sobremi(request):
+    return render(request,'AppBlog/sobremi.html')
 
 class PostList(LoginRequiredMixin,ListView):
     model= Post
@@ -20,12 +23,12 @@ class PostList(LoginRequiredMixin,ListView):
     template_name= 'AppBlog/post_list.html'
 
     def get_queryset(self):
-        return Post.objects.all().order_by('-id').values()
+        return Post.objects.all().order_by('-fecha_creacion').values()
 
 
 class PostListCuidados(LoginRequiredMixin,ListView):
     model= Post    
-    paginate_by = 5
+    paginate_by = 6
     template_name= 'AppBlog/post_filter_cuidados.html'
     
     def get_queryset(self):
@@ -33,7 +36,7 @@ class PostListCuidados(LoginRequiredMixin,ListView):
 
 class PostListAlimentación(LoginRequiredMixin,ListView):
     model= Post    
-    paginate_by = 5
+    paginate_by = 6
     template_name= 'AppBlog/post_filter_alimentacion.html'
 
     def get_queryset(self):
@@ -42,7 +45,7 @@ class PostListAlimentación(LoginRequiredMixin,ListView):
 
 class PostListEntretenimiento(LoginRequiredMixin,ListView):
     model= Post    
-    paginate_by = 5
+    paginate_by = 6
     template_name= 'AppBlog/post_filter_entretenimiento.html'
 
     def get_queryset(self):
@@ -54,7 +57,11 @@ class PostCreate(LoginRequiredMixin,CreateView):
     model = Post
     template_name = 'AppBlog/post_create.html'
     success_url = '/post_list'
-    fields=['titulo','subtitulo','categoria','contenido','fecha','autor']
+    #fields=['idautor','titulo','descripcion','categoria','contenido','fecha','autor','imagen']
+    form_class=PostCreateForm
+    
+    def get_initial(self):
+        return {'autor': self.request.user,'idautor':self.request.user}
 
 class PostDetail(LoginRequiredMixin,DetailView):
     model = Post
@@ -70,7 +77,7 @@ class PostUpdate(LoginRequiredMixin,UpdateView):
     model=Post
     template_name = 'AppBlog/post_create.html'
     success_url="/post_list"
-    fields=['titulo','subtitulo','categoria','contenido','fecha','autor']
+    fields=['titulo','descripcion','categoria','contenido','autor','imagen']
 
 
 class ControlUsuarios(LoginRequiredMixin,ListView):
@@ -79,5 +86,6 @@ class ControlUsuarios(LoginRequiredMixin,ListView):
     template_name= 'AppBlog/user_list.html'
 
     def get_queryset(self):
-        return User.objects.all().order_by('-id').values()
-    
+        return User.objects.all().order_by('-id').values()  
+
+

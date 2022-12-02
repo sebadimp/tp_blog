@@ -1,0 +1,12 @@
+<h3>agregar avatar...</h3>
+
+<form action="" method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+{{avatar_form.as_p}}
+{{form.as_p}}
+
+<input type="submit" value="agregar">
+
+</form>
