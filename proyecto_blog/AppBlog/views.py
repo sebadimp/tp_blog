@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -32,7 +33,7 @@ class PostListCuidados(LoginRequiredMixin,ListView):
     template_name= 'AppBlog/post_filter_cuidados.html'
     
     def get_queryset(self):
-        return Post.objects.filter(categoria__iexact='Cuidados').order_by('-id').values()
+        return Post.objects.filter(categoria__iexact='Cuidados').order_by('-fecha_creacion').values()
 
 class PostListAlimentación(LoginRequiredMixin,ListView):
     model= Post    
@@ -40,7 +41,7 @@ class PostListAlimentación(LoginRequiredMixin,ListView):
     template_name= 'AppBlog/post_filter_alimentacion.html'
 
     def get_queryset(self):
-        return Post.objects.filter(categoria__iexact='Alimentación').order_by('-id').values()
+        return Post.objects.filter(categoria__iexact='Alimentación').order_by('-fecha_creacion').values()
     
 
 class PostListEntretenimiento(LoginRequiredMixin,ListView):
@@ -49,9 +50,31 @@ class PostListEntretenimiento(LoginRequiredMixin,ListView):
     template_name= 'AppBlog/post_filter_entretenimiento.html'
 
     def get_queryset(self):
-        return Post.objects.filter(categoria__iexact='Entretenimiento').order_by('-id').values()
+        return Post.objects.filter(categoria__iexact='Entretenimiento').order_by('-fecha_creacion').values()
 
+class PostListEnfermedades(LoginRequiredMixin,ListView):
+    model= Post    
+    paginate_by = 6
+    template_name= 'AppBlog/post_filter_enfermedades.html'
 
+    def get_queryset(self):
+        return Post.objects.filter(categoria__iexact='Enfermedades').order_by('-fecha_creacion').values()
+
+class PostListLugares(LoginRequiredMixin,ListView):
+    model= Post    
+    paginate_by = 6
+    template_name= 'AppBlog/post_filter_lugares.html'
+
+    def get_queryset(self):
+        return Post.objects.filter(categoria__iexact='Lugares_y_Paseos').order_by('-fecha_creacion').values()
+
+class PostListCuriosidades(LoginRequiredMixin,ListView):
+    model= Post    
+    paginate_by = 6
+    template_name= 'AppBlog/post_filter_curiosidades.html'
+
+    def get_queryset(self):
+        return Post.objects.filter(categoria__iexact='Curiosidades').order_by('-fecha_creacion').values()
 
 class PostCreate(LoginRequiredMixin,CreateView):
     model = Post
@@ -88,4 +111,15 @@ class ControlUsuarios(LoginRequiredMixin,ListView):
     def get_queryset(self):
         return User.objects.all().order_by('-id').values()  
 
+def buscar_titulo(request):
 
+    if request.GET.get('titulo',False):
+        titulo=request.GET['titulo']
+        posteos=Post.objects.filter(titulo__icontains=titulo)
+
+        return render(request,'AppBlog/post_list.html',{'posteos':posteos})
+
+    else:
+        respuesta="No hay resultados"
+
+    return render(request,'AppBlog/post_list.html',{'respuesta':respuesta})

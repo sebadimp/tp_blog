@@ -4,22 +4,32 @@
 
 {% block perfil %}
 
-<h1 style="color: white;"><i>Datos del Usuario</i></h1>
-<div class="card" style="width: 18rem;">
-    {% if avatar.imagen %}
-    <img src={{avatar.imagen.url}} class="card-img-top" alt="...">
-    <a class="btn btn-outline-dark" href={% url 'update avatar' user.id  %}>Actualizar Avatar</a>
+<div class="card" style="width: 24rem;">
+  
+  <img src={{imagenperfil}} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h3 class="card-title">{{user.username}}</h3>
+    <h6 class="card-title">{{user.first_name}} {{user.last_name}}</h6>
+    <h6 class="card-title">{{user.email}}</h6>
+    <br>
+    <p class="card-text"><b><i>Sobre mi:</i></b></p>
+    <p class="card-text">{{sobremi}}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+
+    <li class="list-group-item"><b><i>Instagram:</i></b> <a>{{instagram}}</a></li>
+    <li class="list-group-item"><b><i>Facebook:</i></b> {{facebook}}</li>
+    <li class="list-group-item"><b><i>Twitter:</i></b> {{twitter}}</li>
+  </ul>
+  <div class="card-body">
+    {% if not imagenperfil %}
+    <a class="btn btn-outline-dark" href={% url 'add avatar' %}>Agregar Avatar</a>
     {% else %}
-    <img src="" class="card-img-top" alt="...">   
-    <a class="btn btn-outline-dark" href={% url 'update avatar' user.id  %}>Agregar Avatar</a>
+    <a class="btn btn-outline-dark" href={% url 'add avatar' %}>Actualizar Avatar</a>
     {% endif %}
-    <div class="card-body">
-      <h5 class="card-title">{{user.username}}</h5>
-      <p>{{user.first_name}}, {{user.last_name}}</p>
-      <p>{{user.email}}</p>
-    </div>
-      <a class="btn btn-outline-dark" href={% url 'user update'  %}>Actualizar Datos</a>
-      </div>
+    <a class="btn btn-outline-dark" href={% url 'edit user' %}>Editar Información</a>
+  </div>
+</div>
 
 {% endblock perfil %}
 

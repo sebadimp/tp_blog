@@ -8,6 +8,8 @@ CATEGORIA_OPCIONES = (
     ('alimentación', 'Alimentación'),
     ('entretenimiento','Entretenimiento'),
     ('lugares_y_paseos','Lugares y Paseos'),
+    ('enfermedades','Enfermedades'),
+    ('curiosidades','Curiosidades'),
 )
 class Post(models.Model):
     idautor= models.ForeignKey(User, on_delete=models.CASCADE, null=False)

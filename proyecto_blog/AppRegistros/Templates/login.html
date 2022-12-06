@@ -6,13 +6,20 @@
 <ul>
     <form action="" method="post"> {% csrf_token %}
 
-        {{form.as_p}}
-    
-        <button class="btn btn-outline-dark" type="submit">Iniciar Sesión</button>
+        <table>
+            <br>
+            <h2 style='color:dark'>Hola !</h2>
+            {{form.as_table}}
+        </table>
+    <br>
+    <br>
+        <button class="btn btn-danger" type="submit">Iniciar Sesión</button>
     
     </form>
 <p></p>  
-<p> Usuario nuevo? <a  href={% url 'registro' %}>Registrarse</a> </p>
+
+<br>
+<p style="color:white"> Usuario nuevo? <a  style="color:white" href={% url 'registro' %}>Registrarse</a> </p>
 
 </ul>
 {% endblock %}

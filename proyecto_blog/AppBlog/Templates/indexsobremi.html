@@ -6,14 +6,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>www.blogdemascotas.com</title>
+        <title>Blog de Mascotas</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href={% static "AppBlog/css/styles.css" %} rel="stylesheet" />
     </head>
     <body>
-        <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href={% url 'post list' %}>Blog</a>
@@ -41,43 +40,33 @@
             </div>
         </nav>
         <!-- Page header with logo and tagline-->
-        <header class="py-2 bg-light border-bottom mb-4">
+        <header class="py-2 bg-light border-bottom mb-0"  style="background-image: url({% static 'AppBlog/imagen/bannernosotros2.jpg' %}); width:100%; background-repeat: no-repeat; background-size: cover;">
             <div class="container">
-
-                    {% block imagen %}
-                    
-                    {% endblock imagen %}
-
+                <br>
+                <br>
+                <br>
+                <br>
+                {% block sobremi %}
+                            
+                {% endblock sobremi %}
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
             </div>
         </header>
-        <!-- Page content-->
-        <div class="container">
-            <div class="row">
-                <!-- Blog entries-->
-                <div class="col-lg-32">
-                    <!-- Featured blog post-->
-
-                    <!-- Nested row for non-featured blog posts-->
-                    <div class="row">
-                        <div class="col-xxl-64">                            
-
-                            {% block detail  %}
-
-                            {% endblock detail  %}
-
-                            {% block create %}
-
-                            {% endblock create %}
-
-                            {% block delete %}
-
-                            {% endblock delete %}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         <!-- Footer-->
         <p></p>
         <footer class="py-3 bg-dark">

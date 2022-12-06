@@ -4,10 +4,10 @@ from django.views.generic.edit import CreateView,UpdateView
 from django.contrib.auth.views import LoginView,LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from .models import Personal,Avatar
-from .forms import RegistroForm,UserUpdateForm,UserInfoForm,AvatarForm,AvatarAddForm
-from django.views.generic.detail import DetailView
+
+from .models import Perfiles
+from .forms import RegistroForm,UserUpdateForm,PerfilForm,AvatarForm
+
 
 
 
@@ -22,111 +22,156 @@ class AdminLoginView(LoginView):
 class AdminLogoutView(LogoutView):
     template_name='logout.html'
 
-def UserUpdate(request):
-    usuario = request.user
-    
+
+@login_required
+def add_avatar(request):
+
     if request.method == 'POST':
-            
-            edituserform = UserUpdateForm(request.POST)
-            aboutuserform = UserInfoForm(request.POST)
 
-            if edituserform.is_valid() and aboutuserform.is_valid():
+        miAvatar = AvatarForm(request.POST, request.FILES)
 
-                data = edituserform.cleaned_data
+        if miAvatar.is_valid():
 
-                usuario.email = data["email"]
-                usuario.first_name = data["first_name"]
-                usuario.last_name = data["last_name"]
-                usuario.password1 = data["password1"]
-                usuario.password2 = data["password2"]
+            usuario = request.user
 
-                usuario.save()
+            avatar = Perfiles.objects.filter(user=usuario)
 
-                usuario_k = Personal.objects.filter(user=usuario)
-                data1 = aboutuserform.cleaned_data
+            file = miAvatar.cleaned_data
 
-                if len(usuario_k) > 0:
+            if len(avatar) > 0:
 
-                    usuario_k = usuario_k[0]
+                avatar = avatar[0]
+                avatar.imagen = file['imagen']
+                avatar.save()
 
-                    usuario_k.biografia = data1['biografia']
-                    usuario_k.instagram = data1['instagram']
-                    usuario_k.facebook = data1['facebook']
-                    usuario_k.twitter = data1['twitter']
+                avatar = Perfiles.objects.filter(user=request.user)
 
-                    usuario_k.save()
-
-                else:
-
-                    usuario_k = Personal(user= usuario, biografia=data1['biografia'], instagram=data1['instagram'], facebook=data1['facebook'], twitter=data1['twitter'])
-                    usuario_k.save()
-
-                return redirect('post list')
+                imagen = avatar[0].imagen.url
 
             else:
 
-                edituserform = UserUpdateForm()
-                aboutuserform = UserInfoForm()
+                avatar = Perfiles(user=usuario, imagen=miAvatar.cleaned_data['imagen'])
+                avatar.save()
 
-                return render(request, 'AppRegistros/user_update.html', {"edituserform": edituserform, "aboutuserform":aboutuserform, "errors": ['Datos ingresados inválidos.']})
-                
-    else: 
-
-        edituserform = UserUpdateForm(initial={'email': usuario.email, 'first_name': usuario.first_name, 'last_name': usuario.last_name})
-        aboutuserform = UserInfoForm()
-
-        return render(request, 'AppRegistros/user_update.html', {"aboutuserform":aboutuserform, "edituserform": edituserform})
+                imagen = None
 
 
-class UserProfile(LoginRequiredMixin,DetailView):
-    model = User
-    template_name = 'AppRegistros/user_profile.html'
+
+        #return render(request, 'AppBlog/post_list.html', {'imagen':imagen})
+        return redirect('profile')
+    else:
+
+        miAvatar = AvatarForm()
+
+        imagen = None
+        
+        return render(request, 'AppRegistros/user_avatar.html', {'miAvatar': miAvatar, 'imagen': imagen})
+
+@login_required
+def profile(request):
+    
+    user = request.user
+
+    perfil = Perfiles.objects.filter(user=request.user)
+
+    if len(perfil) > 0:
+
+        imagenperfil = perfil[0].imagen.url
+        sobremi = perfil[0].sobremi
+        instagram = perfil[0].instagram
+        facebook = perfil[0].facebook
+        twitter = perfil[0].twitter
+
+    else:
+
+        imagenperfil = None
+        sobremi = None
+        instagram = None
+        facebook = None
+        twitter = None
 
 
-def agregaravatar(request):
-    if request.method=='POST':
+    if request.user.username:
 
-        avatar_form=AvatarForm(request.POST,request.FILES)
+        perfilusuario = Perfiles.objects.filter(user=request.user)
 
-        if avatar_form.is_valid():
-            
+        if len(perfilusuario) > 0:
 
-            usuario=User.objects.get(username=request.user)
+            img = perfilusuario[0].imagen.url
 
-           
-            avatars= Avatar(user=usuario,imagen=avatar_form.cleaned_data['imagen'])
+        else:
 
-            avatars.save()
-
-            return render(request,'AppRegistros/user_profile.html')
+            img = None
     
     else:
 
-        avatar_form=AvatarForm()
+        img = None
 
-    return render(request,'AppRegistros/user_avatar.html',{'avatar_form':avatar_form})
+    return render(request, 'AppRegistros/user_profile.html', {'user':user, 'imagenperfil':img, 'img': img, 'sobremi':sobremi, 'instagram':instagram, 'facebook':facebook, 'twitter':twitter})
 
-def avatar(request):
-    avatars=Avatar.objects.filter(user=request.user.id)
-    return render(request,'AppRegistros/indexuser.html',{'url':avatars[0].imagen.url})
+@login_required
+def edituser(request):
 
+    usuario = request.user
 
-class UserProfile(LoginRequiredMixin,DetailView):
-    model = Avatar
-    template_name = 'AppRegistros/user_profile.html'
+    perfil = Perfiles.objects.filter(user=usuario)
 
-class AvatarAdd(LoginRequiredMixin,CreateView):
-    model = Avatar
-    template_name = 'AppRegistros/user_avatar.html'
-    success_url = reverse_lazy('post list')
-    form_class=AvatarAddForm
-    
-    def get_initial(self):
-        return {'user': self.request.user}
+    if len(perfil) > 0:
 
-class AvatarUpdate(LoginRequiredMixin,UpdateView):
-    model= Avatar
-    template_name = 'AppRegistros/user_avatar.html'
-    success_url =reverse_lazy('post list')
-    fields=['imagen']
+        imagenperfil = perfil[0].imagen.url
 
+    else:
+
+        imagenperfil= None
+
+    if request.method == 'POST':
+         
+        usereditform = UserUpdateForm(request.POST)
+        perfileditform = PerfilForm(request.POST)
+
+        if usereditform.is_valid() and perfileditform.is_valid():
+
+            info_usuario = usereditform.cleaned_data
+
+            usuario.email = info_usuario["email"]
+            usuario.first_name = info_usuario["first_name"]
+            usuario.last_name = info_usuario["last_name"]
+            usuario.password1 = info_usuario["password1"]
+            usuario.password2 = info_usuario["password2"]
+
+            usuario.save()
+
+            usuario_perfil = Perfiles.objects.filter(user=usuario)
+            info_perfil = perfileditform.cleaned_data
+
+            if len(usuario_perfil) > 0:
+
+                usuario_perfil = usuario_perfil[0]
+
+                usuario_perfil.sobremi = info_perfil['sobremi']
+                usuario_perfil.instagram = info_perfil['instagram']
+                usuario_perfil.facebook = info_perfil['facebook']
+                usuario_perfil.twitter = info_perfil['twitter']
+
+                usuario_perfil.save()
+
+            else:
+
+                usuario_perfil = Perfiles(user= usuario, sobremi=info_perfil['sobremi'], instagram=info_perfil['instagram'], facebook=info_perfil['facebook'], twitter=info_perfil['twitter'])
+                usuario_perfil.save()
+
+            return redirect('profile')
+
+        else:
+
+            usereditform = UserUpdateForm()
+            perfileditform = PerfilForm()
+
+            return render(request, 'AppRegistros/user_update.html', {"usereditform": usereditform, "perfileditform":perfileditform, "errors": ['Datos ingresados inválidos.'], 'img':imagenperfil})
+
+    else: 
+
+        usereditform = UserUpdateForm(initial={'email': usuario.email, 'first_name': usuario.first_name, 'last_name': usuario.last_name})
+        perfileditform = PerfilForm()
+
+        return render(request, 'AppRegistros/user_update.html', {"usereditform": usereditform, "perfileditform":perfileditform, "errors": ['Datos ingresados inválidos.'], 'img':imagenperfil})

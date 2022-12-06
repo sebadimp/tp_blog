@@ -1,8 +1,26 @@
-<form action="" method="post"> {% csrf_token %}
-    {{edituserform.as_p}}
-    {{aboutuserform.as_p}}
-    
-    
-    <button class="btn btn-outline-dark" type="submit">Actualizar</button>
+{% extends 'indexuser.html' %}
+
+{% load static %}
+
+{% block perfil %}
+
+<form style='color:white' action="" method="post"> {% csrf_token %}
+
+<table>
+    <br>
+    <h2 style='color:white'><u>Datos Usuario</u></h2>
+    {{usereditform.as_table}}
+</table>
+
+<table>
+    <br>
+        <h2 style='color:white'><u>Datos Personales</u></h2>
+        {{perfileditform.as_table}}
+</table>
+    <br>    
+    <button style='color:white' class="btn btn-outline-dark" type="submit">Actualizar</button>
 
 </form>
+
+
+{% endblock perfil %}

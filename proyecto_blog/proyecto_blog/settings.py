@@ -39,9 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'AppBlog',
-    'AppLogin',
-    'AppMensajes',
-    'AppPerfiles',
     'AppRegistros',
     'ckeditor'
 ]
@@ -61,7 +58,7 @@ ROOT_URLCONF = 'proyecto_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR,'Templates','AppBlog/Templates','AppLogin/Templates','AppMensajes/Templates','AppPerfiles/Templates','AppRegistros/Templates'],
+        'DIRS': [BASE_DIR,'Templates','AppBlog/Templates','AppRegistros/Templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,12 +1,19 @@
-<h3>agregar avatar...</h3>
+{% extends 'indexuser.html' %}
 
-<form action="" method="post" enctype="multipart/form-data">
+{% load static %}
+
+{% block perfil %}
+
+<h2 style='color:white'><u>Agregar Avatar</u></h2>
+<br>
+<form style='color:white' action="" method="post" enctype="multipart/form-data">
 
 {% csrf_token %}
 
-{{avatar_form.as_p}}
-{{form.as_p}}
+{{miAvatar.as_p}}
 
-<input type="submit" value="agregar">
+<button style='color:white' class="btn btn-outline-dark" type="submit">Cargar</button>
 
 </form>
+
+{% endblock perfil %}
