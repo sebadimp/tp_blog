@@ -22,7 +22,7 @@ class Post(models.Model):
     fecha_creacion=models.DateField('Fecha de Creacion', auto_now = True)
 
     def __str__(self):
-        return f'{self.titulo} |'
+        return f'{self.titulo} | {self.autor}'
     
 
     

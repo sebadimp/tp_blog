@@ -35,7 +35,6 @@ urlpatterns = [
     path('post_detail/<pk>',views.PostDetail.as_view(),name='post detail'),
     path('post_delete/<pk>',views.PostDelete.as_view(),name='post delete'),
     path('post_update/<pk>',views.PostUpdate.as_view(),name='post update'),
-    path('lista_usuarios/',views.ControlUsuarios.as_view(),name='lista usuarios'),
     path('post_busqueda/',views.buscar_titulo,name='buscar titulo'),  
 ]
 

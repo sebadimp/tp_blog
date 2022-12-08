@@ -1,9 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -100,17 +99,9 @@ class PostUpdate(LoginRequiredMixin,UpdateView):
     model=Post
     template_name = 'AppBlog/post_create.html'
     success_url="/post_list"
-    fields=['titulo','descripcion','categoria','contenido','autor','imagen']
+    fields=['titulo','descripcion','categoria','contenido','imagen']
 
-
-class ControlUsuarios(LoginRequiredMixin,ListView):
-    model= User
-    success_url = '/indexusuarios'
-    template_name= 'AppBlog/user_list.html'
-
-    def get_queryset(self):
-        return User.objects.all().order_by('-id').values()  
-
+@login_required
 def buscar_titulo(request):
 
     if request.GET.get('titulo',False):

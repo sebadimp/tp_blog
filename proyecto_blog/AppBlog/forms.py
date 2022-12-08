@@ -10,6 +10,7 @@ class PostCreateForm(ModelForm):
         fields = ('idautor','titulo','descripcion','categoria','contenido','autor','imagen')
         widgets = {
             'idautor': forms.HiddenInput,
+            'autor': forms.HiddenInput,
         }
     
 
