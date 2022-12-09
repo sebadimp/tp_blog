@@ -58,5 +58,5 @@ Existe un buscador el cual obtendrá resultados dependiendo del título de cada 
 En la parte de perfiles, cada usuario podrá subir una imagen a elección, editar su información personal y de contacto.
 
 # 🔗 Links
-
-www.linkedin.com/in/sebadimperio
+1)  Video del funcionamiento: https://drive.google.com/drive/folders/1mo2ablfSGc1Nd7FzGQBqA1YDNDAxe0oL?usp=sharing
+2)  www.linkedin.com/in/sebadimperio
