@@ -37,7 +37,7 @@ def add_avatar(request):
             avatar = Perfiles.objects.filter(user=usuario)
 
             file = miAvatar.cleaned_data
-
+            
             if len(avatar) > 0:
 
                 avatar = avatar[0]
@@ -73,41 +73,49 @@ def profile(request):
     user = request.user
 
     perfil = Perfiles.objects.filter(user=request.user)
+    try:
+        if len(perfil) > 0:
 
-    if len(perfil) > 0:
+            imagenperfil = perfil[0].imagen.url
+            sobremi = perfil[0].sobremi
+            instagram = perfil[0].instagram
+            facebook = perfil[0].facebook
+            twitter = perfil[0].twitter
 
-        imagenperfil = perfil[0].imagen.url
-        sobremi = perfil[0].sobremi
-        instagram = perfil[0].instagram
-        facebook = perfil[0].facebook
-        twitter = perfil[0].twitter
+        else:
 
-    else:
-
-        imagenperfil = None
-        sobremi = None
-        instagram = None
-        facebook = None
-        twitter = None
+            imagenperfil = None
+            sobremi = ""
+            instagram = ""
+            facebook = ""
+            twitter = ""
+    except:
+            imagenperfil = None
+            sobremi = perfil[0].sobremi
+            instagram = perfil[0].instagram
+            facebook = perfil[0].facebook
+            twitter = perfil[0].twitter
 
 
     if request.user.username:
 
         perfilusuario = Perfiles.objects.filter(user=request.user)
+        try:
+            if len(perfilusuario) > 0:
 
-        if len(perfilusuario) > 0:
+                img = perfilusuario[0].imagen.url
 
-            img = perfilusuario[0].imagen.url
+            else:
 
-        else:
-
+                img = None
+        except:
             img = None
     
     else:
 
         img = None
 
-    return render(request, 'AppRegistros/user_profile.html', {'user':user, 'imagenperfil':img, 'img': img, 'sobremi':sobremi, 'instagram':instagram, 'facebook':facebook, 'twitter':twitter})
+    return render(request, 'AppRegistros/user_profile.html', {'user':user, 'imagenperfil':imagenperfil, 'img': img, 'sobremi':sobremi, 'instagram':instagram, 'facebook':facebook, 'twitter':twitter})
 
 @login_required
 def edituser(request):
@@ -117,7 +125,7 @@ def edituser(request):
     perfil = Perfiles.objects.filter(user=usuario)
 
     if len(perfil) > 0:
-
+        
         imagenperfil = perfil[0].imagen.url
 
     else:
