@@ -2,7 +2,7 @@
 
 por Sebastian D'Imperio.
 
-Este es un proyecto realizado para el curso de Python en coderhouse. 
+Este es un proyecto realizado para el curso de Python de Coderhouse. 
 # Cómo instalar y ejecutar el proyecto
 
 Se debe crear el entorno virtual de python:
@@ -12,7 +12,7 @@ python -m venv venv
 
 Luego activamos el entorno con el siguiente comando:
 ```bash
-source venv\Scripts\activate
+source venv/Scripts/activate
 ```
 Luego procedemos a instalar los requerimientos:
 ```bash
